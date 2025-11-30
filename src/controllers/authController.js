@@ -99,10 +99,11 @@ export const logoutUser = async (req, res) => {
 
 export const requestResetEmail = async (req, res, next) => {
   const { email } = req.body;
-  const user = User.findOne({ email });
+  const user = await User.findOne({ email });
 
   if (!user) {
     res.status(200).json({ message: 'Password reset email sent successfully' });
+    return;
   };
 
   const resetToken = jwt.sign(
@@ -147,7 +148,7 @@ export const resetPassword = async (req, res, next) => {
     return;
   }
 
-  const user = User.findOne({ _id: payload.sub, email: payload.email });
+  const user = await User.findOne({ _id: payload.sub, email: payload.email });
   if (!user) {
     next(createHttpError(404, 'User not found'));
     return;
