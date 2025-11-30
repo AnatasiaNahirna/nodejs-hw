@@ -10,6 +10,7 @@ import cookieParser from "cookie-parser";
 
 import authRoutes from './routes/authRoutes.js';
 import notesRoutes from "./routes/notesRoutes.js";
+import userRoutes from './routes/userRoutes.js';
 import { errors } from 'celebrate';
 
 const app = express();
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 
+app.use(userRoutes);
 app.use(authRoutes);
 app.use(notesRoutes);
 
